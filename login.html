@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sign In — Kypson</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+/* ══ DARK theme (default) ═══════════════════════════════════════ */
+[data-theme="dark"]{
+  --bg:        #080a0e;
+  --card-bg:   rgba(14,16,24,0.78);
+  --field-bg:  rgba(255,255,255,.05);
+  --border:    rgba(255,255,255,.09);
+  --border2:   rgba(255,255,255,.16);
+  --text:      #eeeef5;
+  --text2:     #8888a8;
+  --muted:     #55556a;
+  --teal:      #00D4C8;
+  --teal-dim:  rgba(0,212,200,.12);
+  --teal-glow: rgba(0,212,200,.35);
+  --orb1-op:   0.22;
+  --orb3-op:   0.13;
+  --glow1-clr: rgba(0,212,200,.10);
+  --glow2-clr: rgba(0,80,120,.12);
+  --shadow:    0 32px 80px rgba(0,0,0,.65);
+  --orb-filter:brightness(1.2) saturate(1.3);
+}
+
+/* ══ LIGHT theme ════════════════════════════════════════════════ */
+[data-theme="light"]{
+  --bg:        #f0f4f8;
+  --card-bg:   rgba(255,255,255,0.82);
+  --field-bg:  rgba(0,0,0,.04);
+  --border:    rgba(0,0,0,.08);
+  --border2:   rgba(0,0,0,.13);
+  --text:      #0f1117;
+  --text2:     #5a607a;
+  --muted:     #9099b0;
+  --teal:      #009e94;
+  --teal-dim:  rgba(0,158,148,.12);
+  --teal-glow: rgba(0,158,148,.28);
+  --orb1-op:   0.18;
+  --orb3-op:   0.10;
+  --glow1-clr: rgba(0,212,200,.12);
+  --glow2-clr: rgba(0,120,200,.10);
+  --shadow:    0 16px 60px rgba(0,0,0,.12);
+  --orb-filter:brightness(.85) saturate(1.1);
+}
+
+
+html,body{
+  min-height:100%;
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  transition:background .35s ease, color .35s ease;
+}
+body{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh;
+  padding:40px 20px;
+  position:relative;
+  overflow-x:hidden;
+}
+
+/* ══ Theme toggle (top-right) ════════════════════════════════════ */
+.theme-toggle{
+  position:fixed;top:20px;right:20px;z-index:100;
+  background:none;border:none;cursor:pointer;padding:0;
+}
+.toggle-track{
+  width:56px;height:28px;border-radius:40px;
+  background:var(--card-bg);
+  border:1px solid var(--border2);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  box-shadow:0 4px 16px rgba(0,0,0,.25);
+  display:flex;align-items:center;
+  position:relative;padding:0 4px;
+  transition:background .35s,border-color .35s;
+}
+.toggle-thumb{
+  width:20px;height:20px;border-radius:50%;
+  background:var(--teal);
+  position:absolute;left:4px;
+  transition:transform .3s cubic-bezier(.4,0,.2,1),background .35s;
+  box-shadow:0 2px 8px var(--teal-glow);
+}
+[data-theme="light"] .toggle-thumb{transform:translateX(28px)}
+.toggle-icon{
+  font-size:12px;line-height:1;
+  position:absolute;
+  transition:opacity .2s;
+}
+.toggle-icon.moon{right:6px;opacity:1}
+.toggle-icon.sun {left:6px; opacity:0}
+[data-theme="light"] .toggle-icon.moon{opacity:0}
+[data-theme="light"] .toggle-icon.sun {opacity:1}
+
+/* ══ Animated background ══════════════════════════════════════ */
+.bg-layer{
+  position:fixed;inset:0;z-index:0;
+  pointer-events:none;overflow:hidden;
+}
+
+/* Orbs — use CSS variable for opacity so theme can control it */
+.dot-orb{
+  position:absolute;
+  border-radius:50%;
+  background-image:url('assets/Kypson round Logo No BG.png');
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position:center;
+  filter:var(--orb-filter);
+  transition:opacity .35s ease, filter .35s ease;
+}
+.orb1{
+  width:780px;height:780px;
+  top:50%;left:50%;
+  margin-top:-390px;margin-left:-390px;
+  opacity:var(--orb1-op);
+  animation:orbSpin 90s linear infinite;
+}
+.orb3{
+  width:340px;height:340px;
+  bottom:-80px;left:-80px;
+  opacity:var(--orb3-op);
+  animation:orbSpin 70s linear infinite;
+  animation-delay:-20s;
+}
+
+/* Soft glow */
+.bg-glow{
+  position:absolute;border-radius:50%;
+  filter:blur(120px);pointer-events:none;
+  transition:background .35s;
+}
+.glow1{
+  width:600px;height:600px;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(circle,var(--glow1-clr) 0%,transparent 70%);
+}
+.glow2{
+  width:300px;height:300px;
+  top:10%;right:5%;
+  background:radial-gradient(circle,var(--glow2-clr) 0%,transparent 70%);
+}
+
+@keyframes orbSpin{
+  from{transform:rotate(0deg)}
+  to  {transform:rotate(360deg)}
+}
+
+/* ══ Card ══════════════════════════════════════════════════════ */
+.card{
+  position:relative;z-index:1;
+  width:100%;max-width:430px;
+  background:var(--card-bg);
+  backdrop-filter:blur(28px);
+  -webkit-backdrop-filter:blur(28px);
+  border:1px solid var(--border2);
+  border-radius:28px;
+  padding:48px 42px 38px;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.04) inset,
+    var(--shadow),
+    0 0 60px rgba(0,212,200,.04);
+  animation:cardIn .5s cubic-bezier(.4,0,.2,1) both;
+  transition:background .35s,border-color .35s,box-shadow .35s;
+}
+@keyframes cardIn{
+  from{opacity:0;transform:translateY(28px) scale(.97)}
+  to  {opacity:1;transform:translateY(0)    scale(1)}
+}
+
+/* ══ Wordmark ════════════════════════════════════════════════════ */
+.logo-area{
+  display:flex;flex-direction:column;align-items:center;
+  margin-bottom:36px;gap:10px;
+}
+.wordmark{
+  display:flex;align-items:center;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:30px;font-weight:800;letter-spacing:5px;
+  color:var(--text);gap:0;
+  transition:color .35s;
+}
+.wordmark-o{
+  width:30px;height:30px;object-fit:contain;
+  transform:translateY(1px);
+  filter:brightness(1.15);
+}
+.logo-tagline{
+  font-size:11.5px;font-weight:500;
+  color:var(--muted);letter-spacing:.6px;
+  text-transform:uppercase;
+  transition:color .35s;
+}
+
+/* ══ Heading ════════════════════════════════════════════════════ */
+.heading{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:26px;font-weight:800;letter-spacing:-.4px;
+  margin-bottom:6px;
+}
+.subheading{
+  font-size:13.5px;color:var(--text2);
+  margin-bottom:30px;line-height:1.5;
+  transition:color .35s;
+}
+
+/* ══ Fields ═════════════════════════════════════════════════════ */
+.field{margin-bottom:16px}
+.field-label{
+  font-size:11.5px;font-weight:700;
+  color:var(--text2);letter-spacing:.5px;
+  text-transform:uppercase;margin-bottom:8px;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:color .35s;
+}
+.field-label a{
+  color:var(--teal);text-decoration:none;
+  font-size:12px;font-weight:600;
+  letter-spacing:0;text-transform:none;
+  transition:opacity .2s,color .35s;
+}
+.field-label a:hover{opacity:.7}
+
+.input-wrap{
+  display:flex;align-items:center;height:52px;
+  background:var(--field-bg);border:1px solid var(--border);
+  border-radius:14px;
+  transition:border-color .25s,box-shadow .25s,background .25s;
+}
+.input-wrap:focus-within{
+  border-color:var(--teal);
+  background:var(--teal-dim);
+  box-shadow:0 0 0 3px var(--teal-dim);
+}
+.input-icon{
+  width:46px;display:flex;align-items:center;justify-content:center;
+  color:var(--muted);flex-shrink:0;transition:color .25s;
+}
+.input-wrap:focus-within .input-icon{color:var(--teal)}
+.input-wrap input{
+  flex:1;background:none;border:none;outline:none;
+  color:var(--text);font-size:14px;font-family:'Inter',sans-serif;
+  padding-right:6px;transition:color .35s;
+}
+.input-wrap input::placeholder{color:var(--muted)}
+.eye-btn{
+  width:44px;height:44px;background:none;border:none;
+  cursor:pointer;color:var(--muted);
+  display:flex;align-items:center;justify-content:center;
+  border-radius:10px;margin-right:4px;
+  transition:color .2s,background .2s;flex-shrink:0;
+}
+.eye-btn:hover{color:var(--text2);background:var(--field-bg)}
+
+/* ══ Sign In button ═════════════════════════════════════════════ */
+.btn-signin{
+  width:100%;height:54px;
+  background:linear-gradient(135deg,var(--teal),color-mix(in srgb,var(--teal) 80%,black));
+  color:#fff;font-size:15px;font-weight:700;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  border:none;border-radius:14px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  margin-top:24px;letter-spacing:.2px;
+  box-shadow:0 6px 28px var(--teal-glow);
+  transition:transform .2s,box-shadow .2s,opacity .2s,background .35s;
+  position:relative;overflow:hidden;
+}
+[data-theme="light"] .btn-signin{color:#000}
+.btn-signin::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.15),transparent);
+  border-radius:14px;
+}
+.btn-signin:hover{transform:translateY(-2px);box-shadow:0 12px 40px var(--teal-glow)}
+.btn-signin:active{transform:translateY(0);opacity:.9}
+
+/* ══ Divider ════════════════════════════════════════════════════ */
+.divider{
+  display:flex;align-items:center;gap:12px;
+  margin:18px 0;color:var(--muted);font-size:12px;font-weight:500;
+}
+.divider::before,.divider::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,transparent,var(--border2),transparent);
+}
+
+/* ══ Guest button ═══════════════════════════════════════════════ */
+.btn-guest{
+  width:100%;height:52px;background:var(--field-bg);
+  color:var(--text);font-size:14px;font-weight:600;
+  font-family:'Inter',sans-serif;
+  border:1px solid var(--border2);border-radius:14px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .22s;
+}
+.btn-guest:hover{
+  background:var(--teal-dim);
+  border-color:var(--teal);color:var(--teal);
+}
+
+/* ══ Demo link ══════════════════════════════════════════════════ */
+.demo-link{
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  margin-top:14px;color:var(--teal);font-size:13px;font-weight:600;
+  text-decoration:none;opacity:.85;transition:opacity .2s,color .35s;
+}
+.demo-link:hover{opacity:1}
+
+/* ══ Footer ═════════════════════════════════════════════════════ */
+.card-footer{
+  margin-top:24px;padding-top:20px;
+  border-top:1px solid var(--border);
+  text-align:center;display:flex;flex-direction:column;gap:10px;
+  transition:border-color .35s;
+}
+.signup-row{font-size:13.5px;color:var(--text2);transition:color .35s}
+.signup-row a{color:var(--teal);text-decoration:none;font-weight:700;transition:color .35s}
+.signup-row a:hover{opacity:.8}
+.secure-row{
+  display:flex;align-items:center;justify-content:center;
+  gap:7px;font-size:11.5px;color:var(--muted);transition:color .35s;
+}
+.help-row{font-size:11.5px;color:var(--muted);transition:color .35s}
+.help-row a{color:var(--text2);text-decoration:none;transition:color .35s}
+.help-row a:hover{color:var(--teal)}
+</style>
+</head>
+<body>
+
+<!-- Theme toggle -->
+<button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle theme">
+  <span class="toggle-track">
+    <span class="toggle-thumb"></span>
+    <span class="toggle-icon moon">🌙</span>
+    <span class="toggle-icon sun">☀️</span>
+  </span>
+</button>
+
+<!-- Animated dot-circle background -->
+<div class="bg-layer">
+  <div class="bg-glow glow1"></div>
+  <div class="bg-glow glow2"></div>
+  <div class="dot-orb orb1"></div>
+  <div class="dot-orb orb3"></div>
+</div>
+
+<!-- Login card -->
+<div class="card">
+
+  <!-- KYPS + O(logo) + N -->
+  <div class="logo-area">
+    <a class="wordmark" href="index.html" style="text-decoration:none;color:inherit">
+      KYPS<img class="wordmark-o" src="assets/Kypson round Logo No BG.png"
+               alt="O" onerror="this.replaceWith(document.createTextNode('O'))"/>N
+    </a>
+    <div class="logo-tagline">Packaging Supply Chain Platform</div>
+  </div>
+
+  <div class="heading">Welcome Back</div>
+  <div class="subheading">Sign in to your Kypson account</div>
+
+  <!-- Email -->
+  <div class="field">
+    <div class="field-label">Email Address</div>
+    <div class="input-wrap">
+      <span class="input-icon">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/>
+        </svg>
+      </span>
+      <input type="email" placeholder="your@email.com" autocomplete="email"/>
+    </div>
+  </div>
+
+  <!-- Password -->
+  <div class="field">
+    <div class="field-label">
+      Password
+      <a href="#">Forgot password?</a>
+    </div>
+    <div class="input-wrap">
+      <span class="input-icon">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+      </span>
+      <input type="password" id="pwdInput" placeholder="Enter your password" autocomplete="current-password"/>
+      <button class="eye-btn" onclick="togglePwd()" title="Show password">
+        <svg id="eyeIcon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Sign In -->
+  <button class="btn-signin" onclick="handleSignIn()">
+    Sign In
+    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+      <path d="M5 12h14"/><polyline points="12 5 19 12 12 19"/>
+    </svg>
+  </button>
+
+  <div class="divider">or</div>
+
+  <button class="btn-guest" onclick="window.location.href='index.html'">
+    Continue as Guest
+  </button>
+
+  <a class="demo-link" href="index.html">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6L12 2z"/>
+    </svg>
+    Try a live demo
+  </a>
+
+  <div class="card-footer">
+    <div class="signup-row">Don't have an account? <a href="#">Sign Up</a></div>
+    <div class="secure-row">
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+      Secured with end-to-end encryption
+    </div>
+    <div class="help-row">Need help? <a href="mailto:support@kypson.com">Contact support@kypson.com</a></div>
+  </div>
+
+</div>
+
+<script>
+/* ── Theme toggle ─────────────────────────────────────────────── */
+function toggleTheme() {
+  const html = document.documentElement;
+  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('kypson-theme', next);
+}
+
+(function(){
+  const saved = localStorage.getItem('kypson-theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
+})();
+
+/* ── Password eye toggle ──────────────────────────────────────── */
+function togglePwd() {
+  const inp = document.getElementById('pwdInput');
+  const ico = document.getElementById('eyeIcon');
+  const show = inp.type === 'password';
+  inp.type = show ? 'text' : 'password';
+  ico.innerHTML = show
+    ? `<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>`
+    : `<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`;
+}
+
+function handleSignIn() {
+  window.location.href = 'index.html';
+}
+</script>
+</body>
+</html>
