@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Products | Kypson — India's AI-Powered B2B Packaging Marketplace</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+
+/* ─── Category Color Palette ─────────────────────────────── */
+:root {
+  --c-flexible:   #00D4C8;
+  --c-rigid:      #FF6B35;
+  --c-plastic:    #7C3AED;
+  --c-paper:      #F59E0B;
+  --c-bioplastic: #22C55E;
+
+  --radius: 16px;
+  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease:   cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─── Themes ─────────────────────────────────────────────── */
+[data-theme="dark"] {
+  --bg:      #0A0A0B;
+  --bg2:     #111115;
+  --bg3:     #18181D;
+  --bg4:     #1F1F27;
+  --border:  rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.13);
+  --text:    #F0F0F2;
+  --text2:   #9090A5;
+  --muted:   #52526A;
+  --card-bg: #13131A;
+  --shadow:  0 4px 20px rgba(0,0,0,0.45);
+  --shadow-xl: 0 24px 60px rgba(0,0,0,0.65);
+}
+[data-theme="light"] {
+  --bg:      #F4F4F8;
+  --bg2:     #FFFFFF;
+  --bg3:     #EBEBF0;
+  --bg4:     #E2E2EA;
+  --border:  rgba(0,0,0,0.07);
+  --border2: rgba(0,0,0,0.13);
+  --text:    #0A0A0B;
+  --text2:   #4A4A60;
+  --muted:   #9090A5;
+  --card-bg: #FFFFFF;
+  --shadow:  0 4px 20px rgba(0,0,0,0.07);
+  --shadow-xl: 0 24px 60px rgba(0,0,0,0.13);
+}
+
+/* ─── Reset ──────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background:var(--bg);color:var(--text);
+  min-height:100vh;overflow-x:hidden;
+  transition:background .3s,color .3s;
+}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:4px}
+
+/* ─── Cursor Glow (disabled) ─────────────────────────────── */
+#cursorGlow{
+  display:none;
+  position:fixed;pointer-events:none;z-index:1;
+  width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,212,200,0.055) 0%,transparent 65%);
+  transform:translate(-50%,-50%);
+  transition:left .08s linear,top .08s linear;
+  mix-blend-mode:screen;
+}
+[data-theme="light"] #cursorGlow{display:none}
+
+/* ─── Navbar ─────────────────────────────────────────────── */
+.navbar{
+  position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;gap:14px;
+  padding:0 28px;height:62px;
+  background:rgba(10,10,11,0.88);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  transition:background .3s;
+}
+[data-theme="light"] .navbar{background:rgba(255,255,255,0.92)}
+
+.nav-logo{
+  display:flex;align-items:center;gap:9px;
+  text-decoration:none;cursor:pointer;flex-shrink:0;
+  transition:opacity .2s;
+}
+.nav-logo:hover{opacity:.85}
+.nav-logo img{width:28px;height:28px;object-fit:contain;border-radius:6px;flex-shrink:0}
+.nav-logo-text{
+  font-size:16px;font-weight:800;letter-spacing:2px;
+  text-transform:uppercase;color:var(--text);
+}
+.nav-logo-text span{color:var(--c-flexible)}
+
+.nav-search{flex:1;max-width:480px;margin:0 auto;position:relative}
+.nav-search input{
+  width:100%;height:38px;
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:100px;padding:0 42px;
+  font-family:inherit;font-size:13px;color:var(--text);outline:none;
+  transition:all .2s;
+}
+.nav-search input::placeholder{color:var(--muted)}
+.nav-search input:focus{
+  border-color:var(--c-flexible);
+  box-shadow:0 0 0 3px rgba(0,212,200,0.1);
+}
+.s-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+.s-kbd{
+  position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  font-size:10px;color:var(--muted);background:var(--bg4);
+  border:1px solid var(--border);border-radius:5px;padding:1px 6px;
+  font-family:'Inter',sans-serif;pointer-events:none;
+}
+
+.nav-right{display:flex;align-items:center;gap:4px;margin-left:auto}
+.nav-sep{width:1px;height:20px;background:var(--border);margin:0 5px}
+.nib{
+  width:34px;height:34px;border-radius:9px;
+  background:transparent;border:1px solid transparent;
+  color:var(--text2);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .18s;position:relative;
+}
+.nib:hover{background:var(--bg3);border-color:var(--border);color:var(--text)}
+.nib .dot{
+  position:absolute;top:6px;right:6px;
+  width:6px;height:6px;border-radius:50%;
+  background:var(--c-flexible);border:1.5px solid var(--bg);
+}
+.theme-btn{
+  width:34px;height:34px;border-radius:9px;
+  background:var(--bg3);border:1px solid var(--border);
+  color:var(--text2);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;
+}
+.theme-btn:hover{color:var(--text);border-color:var(--border2)}
+.btn-signin{
+  height:34px;padding:0 16px;border-radius:100px;
+  background:var(--c-flexible);color:#000;
+  font-family:inherit;font-size:12.5px;font-weight:700;
+  border:none;cursor:pointer;
+  display:flex;align-items:center;gap:6px;
+  transition:transform .2s,box-shadow .2s;
+}
+.btn-signin:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,212,200,0.4)}
+
+/* ─── Filter Bar ─────────────────────────────────────────── */
+.filter-bar{
+  display:flex;align-items:center;gap:6px;
+  padding:12px 28px;
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  overflow-x:auto;scrollbar-width:none;
+  position:sticky;top:62px;z-index:50;
+}
+.filter-bar::-webkit-scrollbar{display:none}
+
+.chip{
+  display:flex;align-items:center;gap:7px;
+  padding:7px 15px;border-radius:100px;
+  border:1px solid var(--border);
+  background:var(--bg3);color:var(--text2);
+  font-size:12.5px;font-weight:600;font-family:inherit;
+  cursor:pointer;transition:all .22s;white-space:nowrap;
+  flex-shrink:0;position:relative;overflow:hidden;
+}
+.chip svg{opacity:.65;transition:opacity .2s}
+.chip .n{
+  font-size:10.5px;font-weight:700;
+  background:var(--bg4);padding:1px 6px;
+  border-radius:100px;color:var(--muted);transition:all .2s;
+}
+/* Category-specific hover colors */
+.chip[data-filter="all"]:hover        {border-color:var(--c-flexible);color:var(--c-flexible);box-shadow:0 0 14px rgba(0,212,200,.15)}
+.chip[data-filter="flexible"]:hover   {border-color:var(--c-flexible);color:var(--c-flexible);box-shadow:0 0 14px rgba(0,212,200,.15)}
+.chip[data-filter="rigid"]:hover      {border-color:var(--c-rigid);color:var(--c-rigid);box-shadow:0 0 14px rgba(255,107,53,.15)}
+.chip[data-filter="plastic"]:hover    {border-color:var(--c-plastic);color:var(--c-plastic);box-shadow:0 0 14px rgba(124,58,237,.15)}
+.chip[data-filter="paper"]:hover      {border-color:var(--c-paper);color:var(--c-paper);box-shadow:0 0 14px rgba(245,158,11,.15)}
+.chip[data-filter="bioplastic"]:hover {border-color:var(--c-bioplastic);color:var(--c-bioplastic);box-shadow:0 0 14px rgba(34,197,94,.15)}
+
+.chip:hover svg{opacity:1}
+.chip.active{color:#000}
+.chip[data-filter="all"].active,.chip[data-filter="flexible"].active
+  {background:var(--c-flexible);border-color:var(--c-flexible)}
+.chip[data-filter="rigid"].active     {background:var(--c-rigid);border-color:var(--c-rigid)}
+.chip[data-filter="plastic"].active   {background:var(--c-plastic);border-color:var(--c-plastic)}
+.chip[data-filter="paper"].active     {background:var(--c-paper);border-color:var(--c-paper)}
+.chip[data-filter="bioplastic"].active{background:var(--c-bioplastic);border-color:var(--c-bioplastic)}
+.chip.active .n{background:rgba(0,0,0,0.18);color:#000}
+.chip.active svg{opacity:1}
+
+.filter-spacer{flex:1}
+.vbtns{display:flex;gap:3px}
+.vbtn{
+  width:30px;height:30px;border-radius:8px;
+  border:1px solid var(--border);background:transparent;
+  color:var(--muted);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .15s;
+}
+.vbtn.active,.vbtn:hover{background:var(--bg4);color:var(--text);border-color:var(--border2)}
+
+/* ─── Hero (removed) ─────────────────────────────────────── */
+.hero{
+  display:none;
+  padding:72px 28px 56px;
+  text-align:center;
+  position:relative;overflow:hidden;
+  background:linear-gradient(180deg,var(--bg2) 0%,var(--bg) 100%);
+  border-bottom:1px solid var(--border);
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(0,212,200,.055) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:5px 14px;border-radius:100px;
+  background:rgba(0,212,200,.08);border:1px solid rgba(0,212,200,.2);
+  color:var(--c-flexible);font-size:11px;font-weight:700;letter-spacing:.6px;
+  text-transform:uppercase;margin-bottom:20px;
+}
+.hero-headline{
+  font-size:44px;font-weight:800;letter-spacing:-1.2px;line-height:1.08;
+  margin-bottom:14px;
+  background:linear-gradient(140deg,var(--text) 40%,var(--text2) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+[data-theme="light"] .hero-headline{
+  background:linear-gradient(140deg,#0A0A0B 40%,#6060a0 100%);
+  -webkit-background-clip:text;background-clip:text;
+}
+.hero-sub{
+  font-size:15px;color:var(--text2);max-width:520px;
+  margin:0 auto 34px;line-height:1.65;
+}
+.ai-search-wrap{
+  position:relative;max-width:640px;margin:0 auto 28px;
+}
+.ai-search-field{
+  width:100%;height:60px;
+  background:var(--bg2);
+  border:1.5px solid var(--border2);border-radius:100px;
+  padding:0 148px 0 58px;
+  font-family:inherit;font-size:14px;color:var(--text);
+  outline:none;
+  box-shadow:0 4px 28px rgba(0,0,0,.18);
+  transition:border-color .25s,box-shadow .25s;
+}
+.ai-search-field::placeholder{color:var(--muted)}
+.ai-search-field:focus{
+  border-color:var(--c-flexible);
+  box-shadow:0 4px 28px rgba(0,0,0,.18),0 0 0 3px rgba(0,212,200,.12);
+}
+.ai-search-icon{
+  position:absolute;left:20px;top:50%;transform:translateY(-50%);
+  color:var(--c-flexible);pointer-events:none;
+}
+.ai-search-cta{
+  position:absolute;right:7px;top:50%;transform:translateY(-50%);
+  height:46px;padding:0 22px;border-radius:100px;
+  background:var(--c-flexible);color:#000;
+  font-size:13px;font-weight:700;font-family:inherit;
+  border:none;cursor:pointer;
+  display:flex;align-items:center;gap:7px;
+  transition:box-shadow .2s,transform .2s;
+}
+.ai-search-cta:hover{box-shadow:0 6px 22px rgba(0,212,200,.4);transform:translateY(calc(-50% - 1px))}
+.trust-stats{
+  display:flex;align-items:center;justify-content:center;
+  flex-wrap:wrap;gap:0;
+}
+.trust-stat{
+  display:flex;align-items:center;gap:8px;
+  padding:8px 22px;
+  border-right:1px solid var(--border);
+  font-size:13px;color:var(--text2);
+  transition:color .2s;
+}
+.trust-stat:last-child{border-right:none}
+.trust-stat strong{color:var(--text);font-weight:700}
+.trust-stat svg{color:var(--c-flexible);flex-shrink:0;opacity:.8}
+
+/* ─── Main ───────────────────────────────────────────────── */
+#products-view{transition:opacity .4s var(--ease),transform .4s var(--ease)}
+#products-view.exit{opacity:0;transform:translateX(-50px);pointer-events:none}
+
+.main{padding:28px 28px 100px}
+.pg-head{margin-bottom:22px;display:flex;align-items:flex-end;justify-content:space-between}
+.pg-title{font-size:26px;font-weight:800;letter-spacing:-.4px}
+.pg-meta{font-size:12.5px;color:var(--muted);margin-top:3px}
+.pg-meta em{font-style:normal;font-weight:600}
+.pg-sort{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text2)}
+.pg-sort select{
+  background:var(--bg3);border:1px solid var(--border);
+  color:var(--text);font-family:inherit;font-size:12px;
+  padding:5px 10px;border-radius:8px;outline:none;cursor:pointer;
+}
+
+/* ─── Grid ───────────────────────────────────────────────── */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(210px,1fr));
+  column-gap:20px;
+  row-gap:72px;       /* extra vertical breathing room between rows */
+  padding-top:56px;   /* room for images to pop above cards */
+}
+
+/* subtle sibling dim on hover */
+.grid:has(.pcard:hover) .pcard:not(:hover){
+  opacity:.82;
+  transform:scale(.98);
+}
+
+/* ─── Product Card ───────────────────────────────────────── */
+.pcard{
+  position:relative;
+  overflow:visible;
+  background:var(--card-bg);
+  border:1px solid var(--border);
+  border-radius:22px;cursor:pointer;
+  transition:transform .3s ease, box-shadow .3s ease,
+             border-color .25s ease, opacity .25s ease;
+  animation:cardIn .4s both;
+  display:flex;flex-direction:column;
+}
+@keyframes cardIn{
+  from{opacity:0;transform:translateY(28px) scale(.97)}
+  to  {opacity:1;transform:translateY(0)   scale(1)}
+}
+.pcard:hover{
+  transform:translateY(-14px) scale(1.02);
+  box-shadow:0 24px 56px rgba(0,0,0,.5);
+  border-color:var(--c,#00D4C8);
+  z-index:10;
+}
+
+/* ── Colored circle backdrop ── */
+.pcard-circle{
+  position:absolute;
+  left:50%;top:-16px;
+  transform:translateX(-50%);
+  width:130px;height:130px;border-radius:50%;
+  pointer-events:none;z-index:0;
+  opacity:.7;
+  transition:opacity .3s ease;
+}
+.pcard:hover .pcard-circle{ opacity:.9; }
+
+/* ── Product image — breaks out of card top ── */
+.pcard-img-wrap{
+  position:relative;z-index:2;
+  display:flex;align-items:flex-end;justify-content:center;
+  height:140px;
+  margin-top:-42px;
+}
+.pcard-img-wrap img{
+  width:90px;height:120px;
+  object-fit:contain;
+  filter:drop-shadow(0 8px 16px rgba(0,0,0,.35));
+  animation:floatCard 3.2s ease-in-out infinite;
+  transition:filter .3s ease;
+}
+.pcard:nth-child(2n)  .pcard-img-wrap img { animation-delay: .5s }
+.pcard:nth-child(3n)  .pcard-img-wrap img { animation-delay: 1s }
+.pcard:nth-child(4n)  .pcard-img-wrap img { animation-delay: 1.5s }
+.pcard:nth-child(5n)  .pcard-img-wrap img { animation-delay: .8s }
+@keyframes floatCard{
+  0%,100% { transform:translateY(0) }
+  50%     { transform:translateY(-9px) }
+}
+.pcard:hover .pcard-img-wrap img{
+  animation:floatCardHover 1.8s ease-in-out infinite;
+  filter:drop-shadow(0 18px 32px rgba(0,0,0,.55));
+}
+@keyframes floatCardHover{
+  0%,100% { transform:translateY(-18px) scale(1.12) }
+  50%     { transform:translateY(-24px) scale(1.12) }
+}
+
+/* ── Card body ── */
+.pcard-body{
+  padding:12px 18px 18px;
+  position:relative;z-index:1;
+  flex:1;display:flex;flex-direction:column;
+  border-radius:0 0 22px 22px;
+}
+.pcard-cat{
+  font-size:9px;font-weight:700;letter-spacing:1px;
+  text-transform:uppercase;margin-bottom:6px;
+}
+.pcard-name{
+  font-size:14.5px;font-weight:800;line-height:1.25;
+  transition:color .2s ease;
+}
+.pcard-row{display:flex;gap:14px;margin-top:8px;flex:1}
+.pcard-spec{font-size:10.5px;color:var(--muted)}
+.pcard-spec strong{display:block;font-size:12px;font-weight:700;color:var(--text);font-family:'Inter',sans-serif}
+
+/* Fade-in button on hover */
+.pcard-action{
+  margin-top:12px;
+  opacity:0;
+  transition:opacity .25s ease;
+}
+.pcard:hover .pcard-action{ opacity:1; }
+.btn-view{
+  width:100%;height:37px;border-radius:100px;
+  color:#000;font-size:12px;font-weight:700;font-family:inherit;
+  border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  transition:opacity .2s ease;
+}
+.btn-view:hover{ opacity:.88; }
+
+/* empty state */
+.empty{
+  grid-column:1/-1;text-align:center;padding:72px 20px;color:var(--muted)
+}
+.empty svg{opacity:.2;margin-bottom:14px}
+.empty p{font-size:15px;font-weight:600}
+.empty small{font-size:12.5px;display:block;margin-top:5px}
+
+/* ─── Supplier Card ──────────────────────────────────────── */
+.supplier-card{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:16px;padding:16px 18px;margin-bottom:22px;
+  display:flex;align-items:center;gap:14px;
+}
+.supplier-avatar{
+  width:46px;height:46px;border-radius:12px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:17px;font-weight:800;
+  font-family:'Plus Jakarta Sans',sans-serif;color:#000;
+}
+.supplier-info{flex:1;min-width:0}
+.supplier-name{font-size:14px;font-weight:700;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.supplier-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.supplier-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  background:rgba(0,212,200,.08);border:1px solid rgba(0,212,200,.2);
+  color:var(--c-flexible);border-radius:100px;
+  padding:2px 9px;font-size:10.5px;font-weight:700;
+}
+.supplier-loc{font-size:11.5px;color:var(--muted);display:flex;align-items:center;gap:3px}
+.supplier-rating{
+  font-size:12.5px;font-weight:700;
+  color:var(--c-paper);
+  display:flex;align-items:center;gap:3px;
+}
+.btn-contact{
+  height:36px;padding:0 16px;border-radius:100px;
+  background:var(--bg3);border:1px solid var(--border2);
+  color:var(--text2);font-size:12px;font-weight:600;font-family:inherit;
+  cursor:pointer;white-space:nowrap;flex-shrink:0;
+  transition:all .2s;
+}
+.btn-contact:hover{border-color:var(--c-flexible);color:var(--c-flexible);background:rgba(0,212,200,.06)}
+
+/* Sticky RFQ footer */
+.d-rfq-row{
+  display:flex;gap:8px;
+  position:sticky;bottom:0;z-index:10;
+  background:var(--bg);
+  padding:16px 0 0;
+  margin-top:4px;
+  border-top:1px solid var(--border);
+}
+
+/* ─── Detail Page ─────────────────────────────────────────── */
+#detail-view{
+  position:fixed;inset:0;z-index:200;
+  display:flex;overflow:hidden;
+  opacity:0;pointer-events:none;
+  transition:opacity .3s ease;
+}
+#detail-view.open{opacity:1;pointer-events:all}
+
+/* ── Left dark panel — slides in from left ── */
+.d-left{
+  width:42%;flex-shrink:0;
+  position:relative;overflow:hidden;
+  background:#0c0c10;
+  display:flex;flex-direction:column;
+  transform:translateX(-100%);
+  transition:transform .58s cubic-bezier(.4,0,.2,1);
+}
+#detail-view.open .d-left{transform:translateX(0)}
+
+/* Colored blobs */
+.d-blob1,.d-blob2{
+  position:absolute;border-radius:50%;
+  filter:blur(80px);pointer-events:none;
+}
+.d-blob1{width:340px;height:340px;top:-80px;left:-80px;opacity:.28}
+.d-blob2{width:260px;height:260px;bottom:-60px;left:35%;opacity:.18}
+
+/* Back button — overlaid top-left */
+.back-btn{
+  position:absolute;top:24px;left:28px;z-index:10;
+  display:flex;align-items:center;gap:9px;
+  padding:9px 20px;border-radius:100px;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);
+  color:rgba(255,255,255,.88);font-size:13px;font-weight:700;font-family:inherit;
+  cursor:pointer;transition:all .22s;backdrop-filter:blur(8px);
+}
+.back-btn:hover{background:rgba(255,255,255,.2);color:#fff}
+.back-btn svg{transition:transform .2s}
+.back-btn:hover svg{transform:translateX(-3px)}
+
+/* Image frame — centred in flex flow */
+.d-img-frame{
+  flex:1;
+  display:flex;align-items:center;justify-content:center;
+  padding:88px 36px 20px; /* top clears back button */
+  position:relative;z-index:2;
+  min-height:0;
+}
+.d-img{
+  width:65%;max-height:260px;
+  object-fit:contain;
+  filter:drop-shadow(0 16px 40px rgba(0,0,0,.55));
+  animation:floatImg 5s ease-in-out infinite;
+  transition:opacity .15s ease;
+}
+@keyframes floatImg{
+  0%,100%{transform:translateY(0)}
+  50%    {transform:translateY(-8px)}
+}
+.d-img.spinning{animation:spin360 2.4s linear infinite}
+@keyframes spin360{
+  from{transform:rotateY(0deg)}
+  to  {transform:rotateY(360deg)}
+}
+
+/* Bottom info overlay */
+.d-panel-info{position:relative;z-index:3;padding:0 44px 44px}
+.d-cat-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 13px 4px 9px;border-radius:100px;
+  font-size:10.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
+  color:#000;margin-bottom:10px;
+}
+.d-name{
+  font-size:22px;font-weight:800;letter-spacing:-.4px;line-height:1.2;
+  margin-bottom:14px;color:#fff;
+  white-space:normal;word-break:break-word;
+}
+.d-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.d-tag{
+  padding:4px 12px;border-radius:100px;
+  border:1px solid rgba(255,255,255,.2);
+  font-size:11px;font-weight:600;color:rgba(255,255,255,.7);
+  background:rgba(255,255,255,.08);
+}
+.d-img-btns{display:flex;gap:8px}
+.d-img-btn{
+  flex:1;height:36px;border-radius:10px;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);
+  color:rgba(255,255,255,.8);font-size:12px;font-weight:600;font-family:inherit;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;
+  transition:all .2s;
+}
+.d-img-btn:hover{background:rgba(255,255,255,.2);color:#fff}
+.d-img-btn.active{color:#000}
+
+/* ── Right info panel — slides in from right ── */
+.d-right{
+  flex:1;overflow-y:auto;
+  transform:translateX(60px);opacity:0;
+  transition:transform .55s cubic-bezier(.4,0,.2,1) .1s,
+             opacity .4s ease .1s;
+}
+#detail-view.open .d-right{transform:translateX(0);opacity:1}
+
+.d-right-inner{max-width:580px;padding:52px 52px 80px}
+
+/* Stagger right-side content */
+.d-right-inner > *{
+  opacity:0;transform:translateY(12px);
+  transition:opacity .3s ease,transform .3s ease;
+}
+#detail-view.open .d-right-inner > *{opacity:1;transform:translateY(0)}
+#detail-view.open .d-right-inner > *:nth-child(1){transition-delay:.20s}
+#detail-view.open .d-right-inner > *:nth-child(2){transition-delay:.26s}
+#detail-view.open .d-right-inner > *:nth-child(3){transition-delay:.32s}
+#detail-view.open .d-right-inner > *:nth-child(4){transition-delay:.38s}
+#detail-view.open .d-right-inner > *:nth-child(5){transition-delay:.44s}
+#detail-view.open .d-right-inner > *:nth-child(6){transition-delay:.50s}
+
+.d-desc{font-size:13.5px;color:var(--text2);line-height:1.7;margin-bottom:24px}
+.d-kpis{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap}
+.d-kpi{
+  flex:1;min-width:90px;
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:14px;padding:14px;
+}
+.d-kpi-label{font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.8px}
+.d-kpi-val{font-size:20px;font-weight:800;margin-top:3px;font-family:'Inter',sans-serif}
+.d-kpi-sub{font-size:11px;color:var(--muted);margin-top:2px}
+
+.d-rfq-row{display:flex;gap:8px;margin-bottom:0}
+.btn-rfq-main{
+  flex:1;height:48px;border-radius:100px;
+  color:#000;font-size:13.5px;font-weight:700;font-family:inherit;
+  border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:transform .2s,box-shadow .2s;
+}
+.btn-rfq-main:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.3)}
+.btn-save{
+  width:48px;height:48px;border-radius:100px;
+  background:var(--bg3);border:1px solid var(--border);
+  color:var(--text2);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;
+}
+.btn-save:hover{border-color:var(--border2);color:var(--text)}
+
+/* Spec accordion */
+.spec-header{
+  font-size:10.5px;font-weight:700;letter-spacing:1.2px;
+  text-transform:uppercase;color:var(--muted);
+  margin-bottom:12px;display:flex;align-items:center;gap:10px;
+}
+.spec-header::after{content:'';flex:1;height:1px;background:var(--border)}
+.spec-badge{
+  padding:2px 9px;border-radius:100px;
+  background:var(--bg3);font-size:10.5px;color:var(--muted);font-weight:600;
+}
+.accordion{display:flex;flex-direction:column;gap:5px}
+
+.acc{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:13px;overflow:hidden;transition:border-color .2s;
+}
+.acc:hover{border-color:var(--border2)}
+.acc.open{border-color:var(--d-accent,#00D4C8)}
+
+.acc-hd{
+  display:flex;align-items:center;gap:10px;
+  padding:13px 16px;cursor:pointer;
+  transition:background .15s;user-select:none;
+}
+.acc-hd:hover{background:rgba(255,255,255,.02)}
+[data-theme="light"] .acc-hd:hover{background:rgba(0,0,0,.02)}
+.acc-dot{
+  width:7px;height:7px;border-radius:50%;
+  flex-shrink:0;transition:box-shadow .2s;
+}
+.acc.open .acc-dot{box-shadow:0 0 9px var(--d-accent,#00D4C8)}
+.acc-num{font-size:10px;font-weight:700;color:var(--muted);font-family:'Inter',sans-serif;min-width:24px}
+.acc-name{font-size:13px;font-weight:700;flex:1}
+.acc-cnt{font-size:11px;color:var(--muted)}
+.acc-chev{color:var(--muted);transition:transform .25s,color .2s;flex-shrink:0}
+.acc.open .acc-chev{transform:rotate(180deg);color:var(--d-accent,#00D4C8)}
+.acc-body{max-height:0;overflow:hidden;transition:max-height .35s var(--ease)}
+.acc.open .acc-body{max-height:500px}
+.acc-rows{padding:2px 14px 14px;display:flex;flex-direction:column;gap:5px}
+.acc-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:9px 12px;background:var(--bg3);border-radius:9px;
+}
+.acc-row-l{font-size:12px;color:var(--text2)}
+.acc-row-v{font-size:12.5px;font-weight:600;font-family:'Inter',sans-serif}
+
+/* Trust strip */
+.trust{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap;}
+.trust-item{
+  flex:1;min-width:130px;display:flex;align-items:center;gap:10px;
+  padding:11px 13px;background:var(--bg2);border:1px solid var(--border);
+  border-radius:12px;
+}
+.t-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.t-label{font-size:11.5px;font-weight:700}
+.t-sub{font-size:10.5px;color:var(--muted);margin-top:1px}
+
+/* ─── Toast ──────────────────────────────────────────────── */
+.toast{
+  position:fixed;bottom:24px;right:24px;z-index:999;
+  padding:11px 18px;background:var(--bg3);border-radius:12px;
+  font-size:13px;font-weight:600;
+  display:flex;align-items:center;gap:9px;
+  transform:translateY(16px);opacity:0;
+  transition:all .35s var(--spring);pointer-events:none;
+  border:1px solid transparent;
+}
+.toast.show{transform:translateY(0);opacity:1}
+.toast-dot{width:7px;height:7px;border-radius:50%}
+
+</style>
+</head>
+<body>
+
+<!-- Cursor glow -->
+<div id="cursorGlow"></div>
+
+<!-- ══════════════════════════════════ NAVBAR -->
+<nav class="navbar">
+  <div class="nav-logo" onclick="goHome()">
+    <img src="assets/Kypson round Logo No BG.png" alt="Kypson" onerror="this.style.display='none'"/>
+    <span class="nav-logo-text" style="font-size:17px;font-weight:800;letter-spacing:2px;color:var(--text)">KYPS<span style="color:var(--c-flexible)">ON</span></span>
+  </div>
+
+  <div class="nav-search">
+    <span class="s-icon">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    </span>
+    <input id="searchInput" type="text" placeholder="Search boxes, bags, pouches, tubes…" autocomplete="off"/>
+    <span class="s-kbd">⌘K</span>
+  </div>
+
+  <div class="nav-right">
+    <button class="nib" title="Notifications">
+      <div class="dot"></div>
+      <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+    </button>
+    <button class="nib" title="Saved">
+      <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m19 21-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+    </button>
+    <button class="nib" title="RFQ Basket">
+      <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+    </button>
+    <div class="nav-sep"></div>
+    <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme">
+      <svg id="ico-sun" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg id="ico-moon" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <div class="nav-sep"></div>
+    <button class="btn-signin" onclick="window.location.href='login.html'">
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+      Sign In
+    </button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════ PRODUCTS VIEW -->
+<div id="products-view">
+
+  <!-- ══ Hero ══════════════════════════════════════════════ -->
+  <div class="hero">
+    <div class="hero-eyebrow">
+      <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      AI-Powered Sourcing
+    </div>
+    <h1 class="hero-headline">Source Smarter.<br>Package Better.</h1>
+    <p class="hero-sub">India's B2B marketplace connecting buyers with 500+ verified packaging suppliers across 16 categories.</p>
+    <div class="ai-search-wrap">
+      <svg class="ai-search-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="ai-search-field" id="heroSearch" type="text" placeholder='Try "sustainable pouches" or "pharma blister 10,000 MOQ"…'/>
+      <button class="ai-search-cta">
+        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Search
+      </button>
+    </div>
+    <div class="trust-stats">
+      <div class="trust-stat">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span><strong>500+</strong> Verified Suppliers</span>
+      </div>
+      <div class="trust-stat">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        <span><strong>₹50Cr+</strong> GMV Processed</span>
+      </div>
+      <div class="trust-stat">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span><strong>48hr</strong> Avg. Response</span>
+      </div>
+      <div class="trust-stat">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <span><strong>16</strong> Product Categories</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter Bar -->
+  <div class="filter-bar">
+    <button class="chip active" data-filter="all">
+      <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      All <span class="n">16</span>
+    </button>
+    <button class="chip" data-filter="flexible">
+      <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12s3-5 9-5 9 5 9 5-3 5-9 5-9-5-9-5z"/><circle cx="12" cy="12" r="2" fill="currentColor"/></svg>
+      Flexible <span class="n">5</span>
+    </button>
+    <button class="chip" data-filter="rigid">
+      <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+      Rigid <span class="n">3</span>
+    </button>
+    <button class="chip" data-filter="plastic">
+      <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 3h6l.5 4H8.5L9 3z"/><rect x="7" y="7" width="10" height="14" rx="1"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+      Plastic <span class="n">5</span>
+    </button>
+    <button class="chip" data-filter="paper">
+      <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Paper <span class="n">2</span>
+    </button>
+    <button class="chip" data-filter="bioplastic">
+      <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 19.82A2 2 0 0 0 6 22c4.5-3.5 7-8 7-13"/><path d="M12 5c0-3 3-5 7-5-1 4-3 7-7 8"/></svg>
+      Bioplastic <span class="n">1</span>
+    </button>
+    <div class="filter-spacer"></div>
+    <div class="vbtns">
+      <button class="vbtn active" title="Grid">
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      </button>
+      <button class="vbtn" title="List">
+        <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="3" cy="6" r="1" fill="currentColor"/><circle cx="3" cy="12" r="1" fill="currentColor"/><circle cx="3" cy="18" r="1" fill="currentColor"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="pg-head">
+      <div>
+        <h1 class="pg-title" id="pgTitle">All Products</h1>
+        <p class="pg-meta"><em id="pgCount">16</em> results · <span id="pgLabel">Showing all categories</span></p>
+      </div>
+      <div class="pg-sort">
+        Sort
+        <select><option>Most Relevant</option><option>Lowest MOQ</option><option>Fastest Lead Time</option></select>
+      </div>
+    </div>
+    <div class="grid" id="productGrid"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ DETAIL VIEW -->
+<div id="detail-view">
+
+  <!-- ── Left dark panel ── -->
+  <div class="d-left" id="dPanelLeft">
+    <button class="back-btn" onclick="closeDetail()">
+      <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Back
+    </button>
+    <div class="d-blob1" id="dBlob1"></div>
+    <div class="d-blob2" id="dBlob2"></div>
+    <div class="d-img-frame">
+      <img id="dImg" src="" alt="" class="d-img"/>
+    </div>
+    <div class="d-panel-info">
+      <div class="d-tags" id="dTags"></div>
+      <div class="d-cat-tag" id="dCatTag"></div>
+      <h1 class="d-name" id="dName"></h1>
+      <div class="d-img-btns">
+        <button class="d-img-btn" id="rotateBtn" onclick="toggle360()">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          360°
+        </button>
+        <button class="d-img-btn" onclick="triggerToast('Saved to your list','#00D4C8')">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m19 21-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Right info panel ── -->
+  <div class="d-right">
+    <div class="d-right-inner">
+      <p class="d-desc" id="dDesc"></p>
+      <div class="d-kpis">
+        <div class="d-kpi">
+          <div class="d-kpi-label">Min. Order</div>
+          <div class="d-kpi-val" id="dMoq"></div>
+          <div class="d-kpi-sub">units</div>
+        </div>
+        <div class="d-kpi">
+          <div class="d-kpi-label">Lead Time</div>
+          <div class="d-kpi-val" id="dLead"></div>
+          <div class="d-kpi-sub">from order</div>
+        </div>
+        <div class="d-kpi">
+          <div class="d-kpi-label">Price Range</div>
+          <div class="d-kpi-val" id="dPrice" style="font-size:15px"></div>
+          <div class="d-kpi-sub">indicative</div>
+        </div>
+        <div class="d-kpi">
+          <div class="d-kpi-label">Suppliers</div>
+          <div class="d-kpi-val" id="dSup"></div>
+          <div class="d-kpi-sub">verified</div>
+        </div>
+      </div>
+
+      <!-- Featured Supplier -->
+      <div class="supplier-card" id="dSupplierCard">
+        <div class="supplier-avatar" id="dSupAvatar"></div>
+        <div class="supplier-info">
+          <div class="supplier-name" id="dSupName"></div>
+          <div class="supplier-meta">
+            <span class="supplier-badge">
+              <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              Verified
+            </span>
+            <span class="supplier-loc" id="dSupLoc">
+              <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </span>
+            <span class="supplier-rating" id="dSupRating">
+              ★
+            </span>
+          </div>
+        </div>
+        <button class="btn-contact" onclick="triggerToast('Message sent to supplier','#00D4C8')">Message</button>
+      </div>
+
+      <div class="d-rfq-row">
+        <button class="btn-rfq-main" id="dRfqBtn" onclick="triggerRfqDetail()">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 12 19.79 19.79 0 0 1 1.97 3.4 2 2 0 0 1 3.95 1.21h3a2 2 0 0 1 2 1.72c.128.96.341 1.903.63 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.29 1.85.502 2.81.63A2 2 0 0 1 22 15.92z"/></svg>
+          Request a Quote — It's Free
+        </button>
+        <button class="btn-save" onclick="triggerToast('Added to RFQ basket','#00D4C8')">
+          <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        </button>
+      </div>
+      <div class="spec-header">
+        Specification Sheet <span class="spec-badge" id="dSpecBadge"></span>
+      </div>
+      <div class="accordion" id="dAccordion"></div>
+      <div class="trust">
+        <div class="trust-item">
+          <div class="t-icon" style="background:rgba(0,212,200,.1)">
+            <svg width="14" height="14" fill="none" stroke="var(--c-flexible)" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div><div class="t-label">Verified Suppliers</div><div class="t-sub">Kypson-vetted</div></div>
+        </div>
+        <div class="trust-item">
+          <div class="t-icon" style="background:rgba(245,158,11,.1)">
+            <svg width="14" height="14" fill="none" stroke="var(--c-paper)" stroke-width="2" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          </div>
+          <div><div class="t-label">Escrow Payments</div><div class="t-sub">Funds protected</div></div>
+        </div>
+        <div class="trust-item">
+          <div class="t-icon" style="background:rgba(124,58,237,.1)">
+            <svg width="14" height="14" fill="none" stroke="var(--c-plastic)" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div><div class="t-label">Trade Credit</div><div class="t-sub">Buy now, pay later</div></div>
+        </div>
+        <div class="trust-item">
+          <div class="t-icon" style="background:rgba(34,197,94,.1)">
+            <svg width="14" height="14" fill="none" stroke="var(--c-bioplastic)" stroke-width="2" viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </div>
+          <div><div class="t-label">Anonymous RFQ</div><div class="t-sub">Identity protected</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════ TOAST -->
+<div class="toast" id="toast">
+  <div class="toast-dot" id="toastDot"></div>
+  <span id="toastMsg"></span>
+</div>
+
+<script>
+// ── Category color system ────────────────────────────────────────────────────
+const CAT = {
+  flexible:   { hex:'#00D4C8', b1:'rgba(0,212,200,.52)',   b2:'rgba(0,212,200,.22)' },
+  rigid:      { hex:'#FF6B35', b1:'rgba(255,107,53,.52)',  b2:'rgba(255,107,53,.22)' },
+  plastic:    { hex:'#7C3AED', b1:'rgba(124,58,237,.52)',  b2:'rgba(124,58,237,.22)' },
+  paper:      { hex:'#F59E0B', b1:'rgba(245,158,11,.52)',  b2:'rgba(245,158,11,.22)' },
+  bioplastic: { hex:'#22C55E', b1:'rgba(34,197,94,.52)',   b2:'rgba(34,197,94,.22)' },
+};
+
+// ── Product Data ─────────────────────────────────────────────────────────────
+const PRODUCTS = [
+  {
+    id:'ad-star', name:'AD Star Bags', cat:'plastic', catLabel:'PLASTIC · SACKS',
+    img:'assets/AD Star Bags.png', moq:'500', lead:'2–3 wk', sup:12,
+    tags:['Cement Bags','BOPP Laminated','UV Stabilised','Valve / Open-mouth'],
+    desc:'High-performance AD Star Bags engineered for cement, chemicals, and bulk powder filling. Multi-layer BOPP lamination ensures superior print quality and moisture resistance, while the AD Star bottom guarantees leak-free sealing under high-speed filling conditions.',
+    catIcon:`<svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 3h6l.5 4H8.5L9 3z"/><rect x="7" y="7" width="10" height="14" rx="1"/></svg>`,
+    specs:[
+      {s:'Product Overview',n:'01',items:[['Product Type','AD Star Bag'],['Material','PP + PE Laminate'],['Application','Cement / Powder Filling']]},
+      {s:'Dimensions',n:'02',items:[['Width','400–600 mm'],['Length','700–1000 mm'],['Gusset','0–80 mm'],['GSM','90–120'],['Layers','3–5 ply'],['Capacity','25–50 kg']]},
+      {s:'Fabric Specifications',n:'03',items:[['Weave','Flat / Tubular'],['Tape Denier','900–1200D'],['Warp/Weft','10×10 per inch'],['UV Stabilised','Yes']]},
+      {s:'Lamination & Structure',n:'04',items:[['Lamination','BOPP / PE'],['Inner Liner','PE Film'],['Kraft Layer','Optional'],['Moisture Barrier','Yes']]},
+      {s:'Valve Specifications',n:'06',items:[['Valve Type','Open-mouth / Valve'],['Valve Width','80–120 mm'],['Valve Material','PP'],['Valve Position','Top / Side']]},
+      {s:'Printing & Branding',n:'09',items:[['Print Type','Flexo / Gravure'],['Colors','Up to 8'],['Coverage','Full Surface'],['Lamination','Gloss / Matte'],['Custom Logo','Yes']]},
+      {s:'Compliance',n:'11',items:[['BIS Certification','Available'],['Food Safe','On request'],['REACH','Compliant']]},
+    ]
+  },
+  {
+    id:'bottle', name:'HDPE / PET Bottles', cat:'plastic', catLabel:'PLASTIC · BOTTLES',
+    img:'assets/BOTTEL.png', moq:'1,000', lead:'3–4 wk', sup:9,
+    tags:['HDPE / PET','Screw Cap','Pharma Grade','Custom Colour'],
+    desc:'Industrial-grade HDPE and PET bottles for pharma, chemical, and FMCG applications. Available with child-resistant closures, tamper-evident seals, and induction sealing. Food-grade and USP Class VI variants on request.',
+    catIcon:`<svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 3h6l.5 4H8.5L9 3z"/><rect x="7" y="7" width="10" height="14" rx="1"/><line x1="10" y1="14" x2="14" y2="14"/></svg>`,
+    specs:[
+      {s:'Product Overview',n:'01',items:[['Material','HDPE / PET'],['Closure','Screw Cap / Flip-Top'],['Application','Pharma / Chemical / FMCG']]},
+      {s:'Dimensions',n:'02',items:[['Volume','50 ml – 5 L'],['Neck Size','18–38 mm'],['Wall','0.8–2.5 mm'],['Height','80–300 mm'],['Diameter','40–120 mm'],['Weight','20–200 g']]},
+      {s:'Barrier & Protection',n:'08',items:[['UV Protection','Optional'],['Child Resistant','Available'],['Tamper Evident','Yes']]},
+      {s:'Compliance',n:'11',items:[['FDA Grade','Available'],['BIS Marked','Yes'],['ISO 9001','Certified']]},
+    ]
+  },
+  {
+    id:'blister', name:'Blister Packaging', cat:'rigid', catLabel:'RIGID · BLISTER',
+    img:'assets/Blister Packaging.png', moq:'2,000', lead:'2–3 wk', sup:7,
+    tags:['PVC / PETG','Thermoform','Heat Seal','Pharma'],
+    desc:'Precision thermoformed blister packaging for pharmaceuticals, nutraceuticals, and consumer electronics. Available in child-resistant formats with PVDC barrier coatings for maximum shelf-life protection.',
+    catIcon:`<svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3h-8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z"/></svg>`,
+    specs:[
+      {s:'Product Overview',n:'01',items:[['Type','Clamshell / Blister'],['Base Material','PVC / PETG / PP'],['Application','Pharma / Electronics']]},
+      {s:'Dimensions',n:'02',items:[['Cavity Count','1–48 per sheet'],['Sheet Size','Custom'],['Depth','5–50 mm'],['Gauge','150–500 micron'],['Tolerance','±0.1 mm'],['Tool','Thermoform / Injection']]},
+      {s:'Barrier & Protection',n:'08',items:[['Child Resistant','Available'],['Moisture Barrier','PVDC Coated'],['Seal Type','Heat Seal / Cold Form']]},
+      {s:'Compliance',n:'11',items:[['ISO 15223','Compliant'],['FDA Cleared','On request'],['REACH','Compliant']]},
+    ]
+  },
+  {
+    id:'cans', name:'Tin Cans', cat:'rigid', catLabel:'RIGID · CANS',
+    img:'assets/CANS.png', moq:'500', lead:'3–5 wk', sup:6,
+    tags:['Tinplate','Food Safe','Lever Lid','Offset Print'],
+    desc:'Premium tinplate cans for food, paint, and industrial use. Full-surface offset printing, epoxy food-safe lining, easy-open or lever-lid closures in round and rectangular formats.',
+    catIcon:`<svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 2c-5.5 0-9 1.5-9 3v14c0 1.5 3.5 3 9 3s9-1.5 9-3V5c0-1.5-3.5-3-9-3z"/><ellipse cx="12" cy="5" rx="9" ry="3"/></svg>`,
+    specs:[
+      {s:'Product Overview',n:'01',items:[['Material','Tinplate / ETP'],['Lid Type','Easy Open / Lever Lid'],['Application','Food / Paint / Industrial']]},
+      {s:'Dimensions',n:'02',items:[['Volume','100 ml – 20 L'],['Diameter','50–300 mm'],['Height','60–400 mm'],['Gauge','0.18–0.28 mm'],['Shape','Round / Rectangular'],['Finish','Gloss / Matte']]},
+      {s:'Printing & Branding',n:'09',items:[['Print Method','Offset / Silkscreen'],['Colors','Up to 6'],['Coating','Epoxy / Lacquer'],['Embossing','Available']]},
+      {s:'Compliance',n:'11',items:[['Food Safe','Yes (BPA-free)'],['ISO 9001','Certified'],['ROHS','Compliant']]},
+    ]
+  },
+  {
+    id:'flexi-tubes', name:'Flexi Tubes', cat:'flexible', catLabel:'FLEXIBLE · TUBES',
+    img:'assets/Flexi Tubes.png', moq:'1,000', lead:'2–4 wk', sup:8,
+    tags:['LDPE / Alu Lam','Cosmetics','Gravure Print','Flip-Top'],
+    desc:'Multi-layer flexible tubes for cosmetics, pharmaceuticals, and food. Aluminium barrier laminates available for oxygen-sensitive products. High-definition gravure printing up to 10 colours with soft-touch lamination.',
+    catIcon:`<svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 2c0 0-4 3-4 9s4 9 4 9 4-3 4-9-4-9-4-9z"/></svg>`,
+    specs:[
+      {s:'Product Overview',n:'01',items:[['Material','LDPE / Aluminium Laminate'],['Closure','Flip-Top / Screw Cap'],['Application','Pharma / Cosmetics / Food']]},
+      {s:'Dimensions',n:'02',items:[['Diameter','13–50 mm'],['Length','60–220 mm'],['Volume','5 ml – 250 ml'],['Wall','0.3–0.6 mm'],['Tolerance','±1 mm'],['Neck','M15 / M19 / M24']]},
+      {s:'Lamination',n:'04',items:[['Layers','3–7 ply'],['Barrier','Aluminium / EVOH'],['Inner Layer','PE (food grade)'],['Outer Print','Gravure']]},
+      {s:'Printing & Branding',n:'09',items:[['Colors','Up to 10'],['Hot Stamping','Available'],['Finish','Gloss / Matte / Soft-touch']]},
+    ]
+  },
+  {
+    id:'flex-pouch', name:'Flexible Pouches', cat:'flexible', catLabel:'FLEXIBLE · POUCHES',
+    img:'assets/Flexible Pouch.png', moq:'5,000', lead:'2–3 wk', sup:15,
+    tags:['Stand-up / Doy','Zipper Option','Barrier Film','FSSAI'],
+    desc:'Versatile stand-up pouches, 3-side seal, and doy-packs with high-barrier laminates. Zipper, spout, and valve options available. Mono-PE recyclable variants for sustainable packaging.',
+    catIcon:`<svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M4 6h16v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6z"/><path d="M4 6l2-4h12l2 4"/></svg>`,
+    specs:[
+      {s:'Product Overview',n:'01',items:[['Type','Stand-up / 3-side seal / Doy Pack'],['Material','PET/PE · Foil/PE · BOPP/PE'],['Application','Food / Pharma / Personal Care']]},
+      {s:'Dimensions',n:'02',items:[['Width','80–400 mm'],['Height','100–500 mm'],['Gusset','0–100 mm'],['Thickness','70–180 micron'],['Volume','50 ml – 5 L'],['Zipper','Optional']]},
+      {s:'Barrier & Protection',n:'08',items:[['Oxygen Barrier','OTR <1 cc/m²/day'],['Moisture','WVTR <1 g/m²/day'],['UV Block','Alu / Metalized']]},
+      {s:'Compliance',n:'11',items:[['Food Safe','Yes (FDA/FSSAI)'],['BPA Free','Yes'],['Recyclable','Mono-PE option']]},
+    ]
+  },
+  {
+    id:'labels', name:'Labels & Stickers', cat:'paper', catLabel:'PAPER · LABELS',
+    img:'assets/LABELS.png', moq:'10,000', lead:'1–2 wk', sup:20,
+    tags:['Roll Labels','Digital Print','QR/Barcode','BOPP'],
+    desc:'Full-range label solutions from paper rolls to premium BOPP and polyester film labels. Serialisation, QR coding, and anti-counterfeiting features available.',
+    catIcon:`<svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`,
+    specs:[
+      {s:'Product Overview',n:'01',items:[['Type','Roll / Sheet Labels'],['Material','Paper / BOPP / Polyester'],['Application','Labelling / Barcode / VAS']]},
+      {s:'Dimensions',n:'02',items:[['Width','25–300 mm'],['Height','15–300 mm'],['Core','40 / 76 mm'],['Labels/Roll','500–5000'],['Shape','Die-cut / Roll'],['Perforation','Optional']]},
+      {s:'Printing & Branding',n:'09',items:[['Print','Flexo / Digital / Offset'],['Colors','CMYK + 2 Pantone'],['Finish','Gloss / Matte / Textured'],['Hot Foil','Available'],['Serialisation','QR / Barcode']]},
+    ]
+  },
+  {
+    id:'mono-cartons', name:'Mono Cartons', cat:'paper', catLabel:'PAPER · CARTONS',
+    img:'assets/MONO CARTOONS.png', moq:'500', lead:'1–2 wk', sup:18,
+    tags:['SBS / FBB / Kraft','Offset Print','FSC Certified','Embossing'],
+    desc:'Premium mono cartons in SBS, FBB, and Kraft board for pharma, FMCG, and retail. Soft-touch lamination, hot stamping, and embossing for luxury brand positioning.',
+    catIcon:`<svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>`,
+    specs:[
+      {s:'Product Overview',n:'01',items:[['Type','Folding Carton'],['Material','SBS / FBB / Kraft'],['Application','Pharma / FMCG / Retail']]},
+      {s:'Dimensions',n:'02',items:[['GSM','200–450'],['Thickness','0.25–0.55 mm'],['Min Size','30×30×10 mm'],['Max Size','600×400×200 mm'],['Tolerance','±1 mm'],['Board','Solid (no flute)']]},
+      {s:'Printing & Branding',n:'09',items:[['Print Method','Offset / UV'],['Colors','CMYK + Pantone'],['Finish','Soft-touch / Gloss / Matte'],['Embossing','Available'],['Foiling','Hot Stamp / Cold Foil']]},
+      {s:'Compliance',n:'11',items:[['FSC Certified','Yes'],['Food Safe','On request'],['ISO 9001','Available']]},
+    ]
+  },
+  {
+    id:'med-bottles', name:'Medicine Bottles', cat:'plastic', catLabel:'PLASTIC · PHARMA',
+    img:'assets/Medicine Bottles.png', moq:'2,000', lead:'2–3 wk', sup:11,
+    tags:['HDPE / LDPE','Amber Tinted','CRC Cap','Schedule M'],
+    desc:'Schedule M–compliant medicine bottles for oral liquids, tablets, and capsules. Amber-tinted UV protection, child-resistant closures, and induction sealing available.',
+    catIcon:`<svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 3h6l.5 4H8.5L9 3z"/><rect x="7" y="7" width="10" height="14" rx="1"/></svg>`,
+    specs:[
+      {s:'Product Overview',n:'01',items:[['Material','HDPE / LDPE / PET'],['Closure','CRC / Dropper / Screw Cap'],['Application','Pharmaceuticals']]},
+      {s:'Dimensions',n:'02',items:[['Volume','5 ml – 1 L'],['Neck','18–28 mm DIN'],['Wall','0.6–2 mm'],['Height','40–200 mm'],['Shape','Round / Oval'],['Colour','Amber / White / Custom']]},
+      {s:'Barrier & Protection',n:'08',items:[['UV Protection','Amber Tinted'],['Child Resistant','Available'],['Tamper Evident','Induction Seal']]},
+      {s:'Compliance',n:'11',items:[['USP Class VI','Available'],['Schedule M','Compliant'],['ISO 15378','On request']]},
+    ]
+  },
+  {
+    id:'pe-bags', name:'PE Bags & Liners', cat:'flexible', catLabel:'FLEXIBLE · LINERS',
+    img:'assets/PE BAGS AND LINERS.png', moq:'1,000', lead:'1–2 wk', sup:14,
+    tags:['LDPE / LLDPE','Anti-static','VCI Option','Industrial'],
+    desc:'Heavy-duty PE bags and drum liners for industrial, food, and chemical packaging. Anti-static grades for electronics; VCI options for metal part storage. Flat, gusseted, and zipper formats.',
+    catIcon:`<svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M4 6h16v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6z"/><path d="M4 6l2-4h12l2 4"/></svg>`,
+    specs:[
+      {s:'Product Overview',n:'01',items:[['Material','LDPE / LLDPE / HDPE'],['Type','Flat / Gusseted / Zipper'],['Application','Industrial / Food / Pharma Lining']]},
+      {s:'Dimensions',n:'02',items:[['Width','200–2000 mm'],['Length','300–3000 mm'],['Thickness','20–300 micron'],['Capacity','1–2000 L'],['Gusset','0–600 mm'],['Colour','Natural / Black / Custom']]},
+      {s:'Barrier & Protection',n:'08',items:[['Anti-static','Available'],['UV Stabilised','Optional'],['VCI (Rust Inhibit)','Available']]},
+    ]
+  },
+  {
+    id:'plastic-tubes', name:'Plastic Tubes', cat:'plastic', catLabel:'PLASTIC · TUBES',
+    img:'assets/PLASTIC TUBES.png', moq:'2,000', lead:'3–4 wk', sup:8,
+    tags:['LDPE / Coex','EVOH Barrier','Oval Head','Cosmetics'],
+    desc:'Co-extruded and ABL plastic tubes for cosmetics, food, and pharma. EVOH and aluminium barrier layers for oxygen-sensitive products. Oval, standard, and offset shoulder designs.',
+    catIcon:`<svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/></svg>`,
+    specs:[
+      {s:'Product Overview',n:'01',items:[['Material','LDPE / Coex / ABL'],['Head Type','Standard / Oval / Offset'],['Application','Cosmetics / Food / Pharma']]},
+      {s:'Dimensions',n:'02',items:[['Diameter','19–50 mm'],['Length','80–220 mm'],['Volume','10 ml – 350 ml'],['Wall','0.3–0.5 mm'],['Neck','M15 / M19'],['Tolerance','±0.5 mm']]},
+      {s:'Lamination',n:'04',items:[['Layers','3–7'],['Shoulder','Injection Moulded'],['Barrier','EVOH / Aluminium'],['Seam','Ultrasonic Welded']]},
+    ]
+  },
+  {
+    id:'pouches', name:'Pouches & Sachets', cat:'flexible', catLabel:'FLEXIBLE · SACHETS',
+    img:'assets/POCHES.png', moq:'10,000', lead:'2–3 wk', sup:17,
+    tags:['3-Side Seal','Tear Notch','Spout Option','Al Foil'],
+    desc:'High-volume pouches and sachets for food, personal care, and pharma. Aluminium foil laminates for maximum barrier. Spout fitments, tear notches, and hang holes per SKU.',
+    catIcon:`<svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M4 6h16v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6z"/></svg>`,
+    specs:[
+      {s:'Product Overview',n:'01',items:[['Type','3-Side Seal / Pillow / Sachet'],['Material','PET/AL/PE · BOPP/PE'],['Application','Food / Personal Care / Pharma']]},
+      {s:'Dimensions',n:'02',items:[['Width','30–250 mm'],['Length','40–350 mm'],['Thickness','60–120 micron'],['Volume','1 ml – 500 ml'],['Spout','Available'],['Tear Notch','Yes']]},
+      {s:'Barrier & Protection',n:'08',items:[['Oxygen Barrier','<1 OTR'],['Moisture','PVDC / Al foil'],['Sterilisation','Autoclavable option']]},
+    ]
+  },
+  {
+    id:'rigid-boxes', name:'Rigid Boxes', cat:'rigid', catLabel:'RIGID · BOXES',
+    img:'assets/RIGID BOXES.png', moq:'200', lead:'2–4 wk', sup:10,
+    tags:['Magnetic Closure','Luxury Grade','EVA Insert','Soft-touch'],
+    desc:'Luxury rigid boxes with greyboard construction, paper or leatherette wraps. Magnetic closures, ribbon pulls, and custom EVA inserts for a premium unboxing experience.',
+    catIcon:`<svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>`,
+    specs:[
+      {s:'Product Overview',n:'01',items:[['Type','Lid & Base / Magnetic / Drawer'],['Board','Greyboard 1200–3000 gsm'],['Application','Luxury / Electronics / Gifting']]},
+      {s:'Dimensions',n:'02',items:[['Min Size','60×60×30 mm'],['Max Size','600×500×200 mm'],['Board Thickness','1.5–4 mm'],['Tolerance','±1 mm'],['Wrap','Paper / Fabric / Leatherette'],['Insert','EVA / Velvet / Thermoform']]},
+      {s:'Printing & Branding',n:'09',items:[['Wrap Print','Offset / Digital'],['Foiling','Gold / Silver / Custom'],['Embossing','Blind / Foil'],['Finish','Soft-touch / Gloss'],['Ribbon','Optional']]},
+    ]
+  },
+  {
+    id:'sleeve', name:'Shrink Sleeves', cat:'flexible', catLabel:'FLEXIBLE · SLEEVES',
+    img:'assets/Sleeve.png', moq:'5,000', lead:'2–3 wk', sup:9,
+    tags:['PVC / PETG','Full-body','Perforated','60–75% Shrink'],
+    desc:'360° full-body and partial shrink sleeves for beverages, personal care, and food containers. High-shrink PETG for complex shapes; gravure printing up to 10 colours.',
+    catIcon:`<svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M6 8h12"/></svg>`,
+    specs:[
+      {s:'Product Overview',n:'01',items:[['Material','PVC / PETG / OPS'],['Type','Full-body / Neck / Perforation'],['Application','Beverages / Personal Care / Food']]},
+      {s:'Dimensions',n:'02',items:[['Lay Flat','40–300 mm'],['Thickness','35–60 micron'],['Shrink Rate','60–75%'],['Print','Gravure'],['Colors','Up to 10'],['Repeat','Custom']]},
+      {s:'Printing & Branding',n:'09',items:[['Print','Gravure / Flexo'],['Colors','Up to 10 + UV'],['Finish','Gloss / Matte'],['Eye-mark','Yes']]},
+    ]
+  },
+  {
+    id:'woven-pp', name:'Woven PP Bags', cat:'plastic', catLabel:'PLASTIC · BAGS',
+    img:'assets/WOVEN PP BAGS.png', moq:'1,000', lead:'2–3 wk', sup:16,
+    tags:['PP Woven','BOPP Laminated','50 kg capacity','Anti-skid'],
+    desc:'Durable woven PP bags for agriculture, chemicals, and bulk materials. BOPP laminated surface for high-quality flexo printing; PE inner liners for moisture protection.',
+    catIcon:`<svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M4 6h16v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6z"/><path d="M4 6l2-4h12l2 4"/></svg>`,
+    specs:[
+      {s:'Product Overview',n:'01',items:[['Material','PP Woven Fabric'],['Type','Open-mouth / Valve / Liner'],['Application','Agriculture / Chemical / Cement']]},
+      {s:'Dimensions',n:'02',items:[['Width','300–600 mm'],['Length','500–1000 mm'],['GSM','60–120'],['Denier','900–1200D'],['Capacity','5–50 kg'],['Gusset','0–80 mm']]},
+      {s:'Fabric Specifications',n:'03',items:[['Weave Count','8×8 to 14×14'],['UV Stabilised','Yes'],['Lamination','BOPP / PE'],['Tape Width','2–4 mm']]},
+      {s:'Printing & Branding',n:'09',items:[['Print','Flexo'],['Colors','Up to 6'],['Surface','BOPP Laminated'],['Anti-skid','Available']]},
+    ]
+  },
+  {
+    id:'bioplastic-bottles', name:'Bioplastic Bottles', cat:'bioplastic', catLabel:'BIOPLASTIC · BOTTLES',
+    img:'assets/BOTTEL.png', moq:'2,000', lead:'4–6 wk', sup:4,
+    tags:['PLA / Bio-PET','EN 13432','Compostable','Sustainable'],
+    desc:'Next-generation bioplastic bottles from PLA, Bio-PET, and rPET for sustainable packaging. Certified compostable (EN 13432 / ASTM D6400). Custom colours with bio-based pigments.',
+    catIcon:`<svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 19.82A2 2 0 0 0 6 22c4.5-3.5 7-8 7-13"/></svg>`,
+    specs:[
+      {s:'Product Overview',n:'01',items:[['Material','PLA / Bio-PET / rPET'],['Closure','Screw / Pump / Flip-Top'],['Application','Sustainable FMCG / Pharma']]},
+      {s:'Dimensions',n:'02',items:[['Volume','50 ml – 2 L'],['Wall','1–2.5 mm'],['Neck','18–28 mm'],['Height','80–280 mm'],['Shape','Custom'],['Weight','15–180 g']]},
+      {s:'Compliance',n:'11',items:[['Compostable','EN 13432 / ASTM D6400'],['BPI Certified','On request'],['Bio-based Content','>80%']]},
+    ]
+  }
+];
+
+// ── Supplier + Pricing Data ───────────────────────────────────────────────────
+const SUPPLIERS = {
+  'ad-star':           { name:'Shakti Wovens Pvt. Ltd',   city:'Ahmedabad',  rating:4.6, price:'₹12–₹28/bag'   },
+  'bottle':            { name:'Gujarat Poly Containers',   city:'Vadodara',   rating:4.8, price:'₹3.50–₹18/pc'  },
+  'blister':           { name:'Prayag Pharmapack Ltd',     city:'Baddi, HP',  rating:4.5, price:'₹0.80–₹4.20/pc'},
+  'cans':              { name:'Hindustan Tin Works',       city:'Mumbai',     rating:4.7, price:'₹22–₹95/pc'    },
+  'flexi-tubes':       { name:'Cosmopak India',            city:'Silvassa',   rating:4.6, price:'₹4.50–₹22/pc'  },
+  'flex-pouch':        { name:'Uflex Packaging',           city:'Noida',      rating:4.9, price:'₹1.20–₹8.50/pc'},
+  'labels':            { name:'Avery Labels India',        city:'Pune',       rating:4.5, price:'₹0.15–₹2.80/pc'},
+  'mono-cartons':      { name:'ITC Paperboards',           city:'Hyderabad',  rating:4.8, price:'₹1.80–₹12/pc'  },
+  'med-bottles':       { name:'Supreme Pharma Pack',       city:'Mumbai',     rating:4.7, price:'₹2.20–₹14/pc'  },
+  'pe-bags':           { name:'Polyplex Films Ltd',        city:'Noida',      rating:4.4, price:'₹0.80–₹6.50/pc'},
+  'plastic-tubes':     { name:'Essel Propack Ltd',         city:'Mumbai',     rating:4.8, price:'₹5.50–₹28/pc'  },
+  'pouches':           { name:'Ampack Technologies',       city:'Ahmedabad',  rating:4.5, price:'₹2.80–₹9.50/pc'},
+  'rigid-boxes':       { name:'Parksons Packaging',        city:'Mumbai',     rating:4.9, price:'₹35–₹180/pc'   },
+  'sleeve':            { name:'Huhtamaki India Ltd',       city:'Chennai',    rating:4.6, price:'₹0.60–₹3.80/pc'},
+  'woven-pp':          { name:'Kanpur Plastipack Ltd',     city:'Kanpur',     rating:4.5, price:'₹8.50–₹32/bag' },
+  'bioplastic-bottles':{ name:'Ecolife Packaging',         city:'Bengaluru',  rating:4.7, price:'₹3.50–₹14/pc'  },
+};
+
+// ── State ─────────────────────────────────────────────────────────────────────
+let activeFilter = 'all', searchQ = '', currentP = null;
+
+// ── Render ────────────────────────────────────────────────────────────────────
+function renderCards() {
+  const grid = document.getElementById('productGrid');
+  const q = searchQ.toLowerCase().trim();
+  grid.innerHTML = '';
+  let count = 0;
+
+  PRODUCTS.forEach((p, i) => {
+    const show = (activeFilter==='all' || p.cat===activeFilter) &&
+      (!q || p.name.toLowerCase().includes(q) || p.catLabel.toLowerCase().includes(q)
+          || p.desc.toLowerCase().includes(q)
+          || p.tags.some(t=>t.toLowerCase().includes(q)));
+    if (!show) return;
+    count++;
+    const c = CAT[p.cat];
+    const card = document.createElement('div');
+    card.className = 'pcard';
+    card.style.setProperty('--c', c.hex);
+    card.style.animationDelay = (i % 8) * 0.045 + 's';
+    // Circle color: solid category color at 25% opacity for dark, 18% for light
+    const circleColor = c.hex + '40'; // hex + alpha
+    card.innerHTML = `
+      <div class="pcard-circle" style="background:${circleColor};box-shadow:0 0 40px ${c.hex}33"></div>
+      <div class="pcard-img-wrap">
+        <img src="${p.img}" alt="${p.name}" loading="lazy"/>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-cat" style="color:${c.hex}">${p.catLabel}</div>
+        <div class="pcard-name">${p.name}</div>
+        <div class="pcard-row">
+          <div class="pcard-spec"><span>MOQ</span><strong>${p.moq} u</strong></div>
+          <div class="pcard-spec"><span>Lead time</span><strong>${p.lead}</strong></div>
+        </div>
+        <div class="pcard-action">
+          <button class="btn-view" style="background:${c.hex}" onclick="event.stopPropagation();openDetail('${p.id}',this.closest('.pcard'),event)">
+            View Details
+            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+      </div>
+    `;
+
+    card.addEventListener('mouseenter', () => {
+      card.querySelector('.pcard-name').style.color = c.hex;
+      card.style.boxShadow = `0 30px 70px rgba(0,0,0,.55), 0 0 50px ${c.hex}25`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.querySelector('.pcard-name').style.color = '';
+      card.style.boxShadow = '';
+    });
+
+    card.dataset.id = p.id;
+    card.addEventListener('click', e => openDetail(p.id, card, e));
+    grid.appendChild(card);
+  });
+
+  if (count === 0) {
+    grid.innerHTML = `<div class="empty"><svg width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><p>No products found</p><small>Try a different filter or search term</small></div>`;
+  }
+  document.getElementById('pgCount').textContent = count;
+}
+
+// ── Filters ───────────────────────────────────────────────────────────────────
+document.querySelectorAll('.chip[data-filter]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.chip[data-filter]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = btn.dataset.filter;
+    const labels = {all:'Showing all categories',flexible:'Flexible packaging',rigid:'Rigid packaging',plastic:'Plastic packaging',paper:'Paper & board',bioplastic:'Bioplastic'};
+    document.getElementById('pgLabel').textContent = labels[activeFilter]||'';
+    document.getElementById('pgTitle').textContent = activeFilter==='all' ? 'All Products' : btn.innerText.replace(/\d/g,'').trim();
+    renderCards();
+  });
+});
+document.getElementById('searchInput').addEventListener('input', e => {
+  searchQ = e.target.value;
+  renderCards();
+});
+
+// ── Detail Page ───────────────────────────────────────────────────────────────
+function populateDetail(p) {
+  const c = CAT[p.cat];
+  // Left panel — dark bg + category-colored blobs
+  const panel = document.getElementById('dPanelLeft');
+  panel.style.background = `linear-gradient(145deg, ${c.hex}15 0%, #0c0c10 100%)`;
+  document.getElementById('dBlob1').style.background = c.b1;
+  document.getElementById('dBlob2').style.background = c.b2;
+  // Image
+  const img = document.getElementById('dImg');
+  img.src = p.img;
+  img.alt = p.name;
+  img.classList.remove('spinning');
+  document.getElementById('rotateBtn').classList.remove('active');
+  // Category tag + name (in left panel)
+  const tag = document.getElementById('dCatTag');
+  tag.style.background = c.hex;
+  tag.innerHTML = `${p.catIcon||''}${p.catLabel}`;
+  document.getElementById('dName').textContent = p.name;
+  // Right panel
+  document.getElementById('dDesc').textContent = p.desc;
+  document.getElementById('dMoq').textContent = p.moq;
+  document.getElementById('dLead').textContent = p.lead;
+  document.getElementById('dSup').textContent = p.sup + '+';
+  // Price + supplier
+  const s = SUPPLIERS[p.id] || {};
+  document.getElementById('dPrice').textContent = s.price || '—';
+  if (s.name) {
+    const initials = s.name.split(' ').slice(0,2).map(w=>w[0]).join('');
+    const av = document.getElementById('dSupAvatar');
+    av.textContent = initials;
+    av.style.background = c.hex;
+    document.getElementById('dSupName').textContent = s.name;
+    document.getElementById('dSupLoc').innerHTML = `<svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> ${s.city}`;
+    document.getElementById('dSupRating').innerHTML = `★ ${s.rating}`;
+    document.getElementById('dSupplierCard').style.display = '';
+  } else {
+    document.getElementById('dSupplierCard').style.display = 'none';
+  }
+  document.getElementById('dRfqBtn').style.background = c.hex;
+  document.documentElement.style.setProperty('--d-accent', c.hex);
+  document.getElementById('dTags').innerHTML = p.tags.map(t=>`<span class="d-tag">${t}</span>`).join('');
+  const totalSpecs = p.specs.reduce((a,s)=>a+s.items.length,0);
+  document.getElementById('dSpecBadge').textContent = totalSpecs + ' specs';
+  const acc = document.getElementById('dAccordion');
+  acc.innerHTML = '';
+  p.specs.forEach((sec,si) => {
+    const div = document.createElement('div');
+    div.className = 'acc';
+    div.innerHTML = `
+      <div class="acc-hd" onclick="this.parentElement.classList.toggle('open')">
+        <span class="acc-dot" style="background:${c.hex}"></span>
+        <span class="acc-num">${sec.n}</span>
+        <span class="acc-name">${sec.s}</span>
+        <span class="acc-cnt">${sec.items.length} spec${sec.items.length!==1?'s':''}</span>
+        <svg class="acc-chev" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+      <div class="acc-body">
+        <div class="acc-rows">
+          ${sec.items.map(([l,v])=>`<div class="acc-row"><span class="acc-row-l">${l}</span><span class="acc-row-v">${v}</span></div>`).join('')}
+        </div>
+      </div>
+    `;
+    acc.appendChild(div);
+    if (si===0) setTimeout(()=>div.classList.add('open'),300);
+  });
+}
+
+function openDetail(id, cardEl, evt) {
+  const p = PRODUCTS.find(x=>x.id===id);
+  if (!p) return;
+  currentP = p;
+
+  // Capture card image position BEFORE any DOM changes
+  let cardRect = null;
+  if (cardEl) {
+    const ci = cardEl.querySelector('.pcard-img-wrap img');
+    if (ci) cardRect = ci.getBoundingClientRect();
+  }
+
+  populateDetail(p);
+  document.querySelector('.d-right').scrollTop = 0;
+
+  const detailView = document.getElementById('detail-view');
+  const panel     = document.getElementById('dPanelLeft');
+  const destImg   = document.getElementById('dImg');
+
+  // ── Measure destination BEFORE animation starts ──
+  // Snap the panel silently to its final position, measure, then snap back.
+  // The detail-view is opacity:0 + pointer-events:none so user sees nothing.
+  let dr = null;
+  if (cardRect) {
+    panel.style.transition = 'none';
+    panel.style.transform  = 'translateX(0)';
+    void panel.getBoundingClientRect();        // force reflow
+    dr = destImg.getBoundingClientRect();      // accurate final coords
+    panel.style.transform  = '';              // restore CSS (translateX(-100%))
+    panel.style.transition = '';              // restore CSS transition
+    void panel.getBoundingClientRect();        // force reflow before transition
+  }
+
+  // ── Kick off real animation ──
+  document.getElementById('products-view').classList.add('exit');
+  document.querySelector('.navbar').style.visibility = 'hidden';
+  document.body.style.overflow = 'hidden';
+  destImg.style.opacity = '0';
+  detailView.classList.add('open');            // panels slide in
+
+  if (cardRect && dr && dr.width > 0) {
+    const clone = document.createElement('img');
+    clone.src = p.img;
+    Object.assign(clone.style, {
+      position:      'fixed',
+      left:          cardRect.left   + 'px',
+      top:           cardRect.top    + 'px',
+      width:         cardRect.width  + 'px',
+      height:        cardRect.height + 'px',
+      objectFit:     'contain',
+      zIndex:        '9999',
+      pointerEvents: 'none',
+      filter:        'drop-shadow(0 8px 20px rgba(0,0,0,.4))',
+      transition:    'left .58s cubic-bezier(.4,0,.15,1),' +
+                     'top .58s cubic-bezier(.4,0,.15,1),' +
+                     'width .58s cubic-bezier(.4,0,.15,1),' +
+                     'height .58s cubic-bezier(.4,0,.15,1),' +
+                     'filter .58s ease',
+    });
+    document.body.appendChild(clone);
+
+    // One rAF to let the clone be painted, then fly it
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      Object.assign(clone.style, {
+        left:   dr.left   + 'px',
+        top:    dr.top    + 'px',
+        width:  dr.width  + 'px',
+        height: dr.height + 'px',
+        filter: 'drop-shadow(0 16px 40px rgba(0,0,0,.55))',
+      });
+      // When clone arrives, swap in the real image
+      setTimeout(() => {
+        destImg.style.opacity = '';
+        clone.style.transition += ',opacity .15s ease';
+        clone.style.opacity = '0';
+        setTimeout(() => clone.remove(), 180);
+      }, 540);
+    }));
+  } else {
+    destImg.style.opacity = '';
+  }
+}
+
+function closeDetail() {
+  document.getElementById('detail-view').classList.remove('open');
+  document.getElementById('products-view').classList.remove('exit');
+  document.querySelector('.navbar').style.visibility = '';
+  document.body.style.overflow = '';
+}
+
+function goHome() { closeDetail(); }
+
+// ── 360° ─────────────────────────────────────────────────────────────────────
+function toggle360() {
+  const img = document.getElementById('dImg');
+  const btn = document.getElementById('rotateBtn');
+  const on = img.classList.toggle('spinning');
+  btn.classList.toggle('active');
+  if (on) btn.style.background = currentP ? CAT[currentP.cat].hex : '#00D4C8';
+  else btn.style.background = '';
+}
+
+// ── RFQ ───────────────────────────────────────────────────────────────────────
+function triggerRfqDetail() {
+  if (currentP) triggerToast(`RFQ sent for ${currentP.name} — suppliers will be in touch!`, CAT[currentP.cat].hex);
+}
+
+// ── Toast ─────────────────────────────────────────────────────────────────────
+let toastTimer;
+function triggerToast(msg, color='#00D4C8') {
+  clearTimeout(toastTimer);
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').innerHTML = msg;
+  document.getElementById('toastDot').style.background = color;
+  t.style.borderColor = color;
+  t.classList.add('show');
+  toastTimer = setTimeout(()=>t.classList.remove('show'), 3200);
+}
+
+// ── Theme ─────────────────────────────────────────────────────────────────────
+function toggleTheme() {
+  const isDark = document.documentElement.dataset.theme === 'dark';
+  document.documentElement.dataset.theme = isDark ? 'light' : 'dark';
+  document.getElementById('ico-sun').style.display  = isDark ? 'none' : '';
+  document.getElementById('ico-moon').style.display = isDark ? '' : 'none';
+}
+
+// ── Cursor glow ───────────────────────────────────────────────────────────────
+document.addEventListener('mousemove', e => {
+  const g = document.getElementById('cursorGlow');
+  g.style.left = e.clientX + 'px';
+  g.style.top  = e.clientY + 'px';
+});
+
+// ── Keyboard ──────────────────────────────────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if ((e.metaKey||e.ctrlKey) && e.key==='k') { e.preventDefault(); document.getElementById('searchInput').focus(); }
+  if (e.key==='Escape') closeDetail();
+});
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+renderCards();
+</script>
+</body>
+</html>
